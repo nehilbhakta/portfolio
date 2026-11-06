@@ -473,6 +473,30 @@ const ABOUT_HIGHLIGHTS: { icon: string; title: string; text: string }[] = [
   },
 ];
 
+const ABOUT_PRINCIPLES: { icon: string; title: string; text: string }[] = [
+  {
+    icon: "server",
+    title: "Production-ready by default",
+    text: "Reliability, testing and observability are built in, not added afterwards.",
+  },
+  {
+    icon: "chart",
+    title: "Measurable outcomes",
+    text: "Every system is tied to a metric it is expected to move, and measured against it.",
+  },
+  {
+    icon: "square-kanban",
+    title: "Built with the team",
+    text: "Clear pull requests, documentation and honest numbers keep the whole team moving.",
+  },
+];
+
+const ABOUT_STATS: { value: string; label: string }[] = [
+  { value: "6+", label: "Projects shipped" },
+  { value: "2+", label: "Years of experience" },
+  { value: "3.78", label: "Master's GPA" },
+];
+
 const WORK_ITEMS = [
   {
     org: "Ordex Technology Solutions LLP",
@@ -695,7 +719,7 @@ export default function Home() {
                   finishing my MS IT at Arizona State University.
                 </p>
                 <div className="chips">
-                  {["Software Engineer", "Full-Stack Engineer", "AI/ML Engineer", "Backend Engineer"].map((chip) => (
+                  {["React", "Next.js", "TypeScript", "Python", "AI & ML"].map((chip) => (
                     <span className="chip" key={chip}>
                       {chip}
                     </span>
@@ -743,10 +767,14 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="stack-strip" aria-label="Core stack">
-              {["React", "Next.js", "TypeScript", "Python", "FastAPI", "AWS"].map((tech) => (
-                <span key={tech}>{tech}</span>
-              ))}
+            <div className="stack-strip">
+              <p className="stack-cta">
+                I&apos;m happy to show you <span className="grad-text">my work</span> — have a
+                look around.
+              </p>
+              <a className="btn btn-primary btn-sm" href="#contact">
+                Let&apos;s connect <Icon name="arrow-up-right" size={15} />
+              </a>
             </div>
           </div>
         </section>
@@ -784,6 +812,25 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="about-principles">
+              {ABOUT_PRINCIPLES.map((item) => (
+                <div className="principle-card reveal" key={item.title}>
+                  <span className="highlight-icon">
+                    <Icon name={item.icon} size={23} />
+                  </span>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
+            <div className="about-stats">
+              {ABOUT_STATS.map((stat) => (
+                <div className="about-stat" key={stat.label}>
+                  <b>{stat.value}</b>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
