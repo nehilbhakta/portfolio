@@ -125,6 +125,12 @@ const ICON_PATHS: Record<string, ReactNode> = {
       <line x1="18" x2="18" y1="17" y2="13" />
     </>
   ),
+  x: (
+    <>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </>
+  ),
 };
 
 function Icon({ name, size = 20 }: { name: string; size?: number }) {
@@ -244,6 +250,150 @@ const PROJECTS: Project[] = [
   },
 ];
 
+type CaseStudy = {
+  steps: { title: string; text: string }[];
+  challenge: string;
+  approach: string;
+  outcomes: string;
+  contribution: string[];
+  decisions: string[];
+};
+
+const CASE_STUDIES: Record<string, CaseStudy> = {
+  "TaskBoard — Full-Stack Task Board": {
+    steps: [
+      { title: "Create a board", text: "Start with a board for a project, then add lists like Backlog, In Progress and Done." },
+      { title: "Add cards", text: "Each card holds a description, priority, due date and labels — the details that make a task actionable." },
+      { title: "Drag and drop", text: "Move cards between lists or reorder them inside a list with HTML5 drag events; the move saves to the API immediately." },
+      { title: "Search and filter", text: "Find any card by text, or filter by priority or label when a board grows." },
+    ],
+    challenge:
+      "A task board is easy to sketch and hard to make feel right: drag-and-drop has to work on the first try, every move has to save, and the board has to stay fast as cards pile up — with no heavy UI library doing the work.",
+    approach:
+      "Kept the stack boring on purpose: FastAPI + SQLAlchemy on the backend with a clean Board → List → Card model and Pydantic validation, and a Next.js frontend that talks to it through one small API client. Drag-and-drop is plain HTML5 drag events, and the database is SQLite by default with PostgreSQL behind a single env var.",
+    outcomes:
+      "A working board seeded with a realistic Product Launch board (4 lists, 7 cards) on first run, 4 backend tests passing, and the whole thing deployed live on free tiers — Vercel frontend, Render backend — with demo data re-seeding itself on startup.",
+    contribution: [
+      "Built the whole thing end to end — data model, REST API, tests, and the Next.js frontend.",
+      "Designed the drag-and-drop interaction and the card detail dialog, with no UI component library.",
+    ],
+    decisions: [
+      "SQLite by default, PostgreSQL via DATABASE_URL — the same code runs locally and in production.",
+      "No heavy UI library: custom CSS keeps the frontend light and the drag behaviour fully under my control.",
+    ],
+  },
+  "RLVR Environment": {
+    steps: [
+      { title: "Pick a task", text: "The agent is given one of 20 tasks — 10 code, 10 math — with a prompt and a difficulty." },
+      { title: "Submit an answer", text: "For code, the agent writes a function; for math, it gives a number." },
+      { title: "The verifier decides", text: "Code answers run against hidden unit tests; math answers are matched exactly. Reward is 1.0 or 0.0 — nothing in between." },
+      { title: "One shot", text: "One episode, one answer. No second tries, no model judging its own work." },
+    ],
+    challenge:
+      "Reward models are the weak point of RL for reasoning: if a model grades itself, it learns to please the grader, not to be right. The challenge was building an environment where the reward can only come from something checkable.",
+    approach:
+      "A Gymnasium-style environment where every task has a verifier — pytest-style unit tests for code, exact-answer matching for math. The reward is binary and comes only from the verifier, and the env follows the standard reset/step API so any Gymnasium-compatible training loop can use it.",
+    outcomes:
+      "The heuristic baseline scores 2/20 and the oracle 20/20 — the spread that proves the verifiers work. A 299K-parameter transformer trained from scratch on the env scores 7/20, and the held-out results are reported honestly, including where it fails: it never learned general arithmetic.",
+    contribution: [
+      "Designed the 20-task bank, the verifiers, and the Gymnasium API surface.",
+      "Ran the baseline, oracle and tiny-model experiments and wrote up the honest results — including the failures.",
+    ],
+    decisions: [
+      "Binary rewards on purpose: verifiable rewards are sharp, even if the signal is sparse.",
+      "Code runs in-process with exec for speed — flagged as not a sandbox, with containerisation as the production answer.",
+    ],
+  },
+  "Supply Chain KPI Dashboard": {
+    steps: [
+      { title: "Generate the data", text: "A deterministic generator (seed 42) produces 732 purchase orders, inventory snapshots and price changes across 10 suppliers, 3 sites and 40 SKUs." },
+      { title: "Compute the KPIs", text: "pandas turns the raw lines into on-time delivery, lead-time variance, stockout risk, excess inventory and price variance." },
+      { title: "Score the suppliers", text: "Every supplier gets a scorecard; the worst performer gets a full miss report with root cause and prevention." },
+      { title: "Build the dashboard", text: "A Tableau spec turns the same numbers into a dashboard a planner can actually use." },
+    ],
+    challenge:
+      "Supply chain data only helps if people trust it: every KPI needs a written definition and formula, the numbers need audit checks, and a bad supplier needs evidence, not a gut feeling.",
+    approach:
+      "Generated a reproducible simulated dataset with a fixed seed, computed every KPI in pandas with a data dictionary that defines each one, wrote a supplier scorecard with a structured miss report, and specified the Tableau dashboard from the same CSVs — with “simulated” labelled everywhere so the data is never mistaken for real.",
+    outcomes:
+      "732 POs, $13.77M spend, 90.2% on-time delivery; Desert Freight Logistics identified at 69.1% OTD with +1.68 days lateness and a 4.00% defect rate; 9 stockout-risk SKUs and $586,612 of excess inventory surfaced — all verified by 18 automated checks.",
+    contribution: [
+      "Built the data generator, the KPI analysis and the supplier scorecard end to end.",
+      "Wrote the data dictionary and the Tableau dashboard spec so the analysis is reproducible from the CSVs.",
+    ],
+    decisions: [
+      "Simulated data, labelled everywhere — honest about what the findings are and aren't.",
+      "A miss report format (what happened, trend, scope, impact, hypothesis, prevention) instead of a single bad score.",
+    ],
+  },
+  "Heart Attack Risk Prediction & Alert Pipeline": {
+    steps: [
+      { title: "Simulate vitals", text: "20 simulated patients, each with 7 days of vitals — heart rate, blood pressure, sleep, activity." },
+      { title: "Train the model", text: "XGBoost trains on the UCI Cleveland dataset (303 rows) and saves the model with its feature list and metrics." },
+      { title: "Score a patient", text: "The API returns a risk probability with a low / medium / high band and the driving factors in plain words." },
+      { title: "Raise an alert", text: "A high-risk prediction creates a persistent alert — the local equivalent of Lambda + SNS — until someone resolves it." },
+    ],
+    challenge:
+      "This started as an AWS course project (S3, EMR/Spark, SageMaker, Lambda, SNS, Athena) — powerful, but it cost money and couldn't be run or inspected on a laptop. The challenge was keeping the same architecture while making it free and local.",
+    approach:
+      "Rebuilt the pipeline with local equivalents: SQLite instead of S3/Athena, a Python aggregation step instead of Spark, XGBoost trained locally instead of SageMaker, FastAPI instead of Lambda, and an alerts table instead of SNS. The original overfit synthetic data (validation AUC ~0.51); this version trains on the real UCI Cleveland data.",
+    outcomes:
+      "Test ROC-AUC 0.957 (accuracy 0.885, recall 0.964), 5-fold CV 0.896 ± 0.015 — a model that generalises, with 20 simulated patients and a live alerts page. Deployed on Vercel + Render.",
+    contribution: [
+      "Rebuilt the full AWS pipeline as a free local app — model training, API, patient dashboard and alerts.",
+      "Wrote the honest metrics section, including the train/test gap and where the model would not transfer.",
+    ],
+    decisions: [
+      "Local-first rebuild: same architecture, zero cloud cost, runnable on any laptop.",
+      "Disclaimer kept everywhere: demo / educational, simulated patients, not a medical device.",
+    ],
+  },
+  "Restaurant Reservation API": {
+    steps: [
+      { title: "Create a reservation", text: "POST /reservations with a validated payload — guest, party size, date and time." },
+      { title: "Look it up", text: "GET a single reservation by ID, or list them paginated." },
+      { title: "Change its status", text: "PATCH the status to confirm or cancel a booking." },
+      { title: "Read the docs", text: "Swagger docs at /docs document every endpoint, so the API is testable from a browser." },
+    ],
+    challenge:
+      "A reservation API lives or dies on validation: bad dates, impossible party sizes and missing guests have to be rejected at the door, not discovered in the database.",
+    approach:
+      "FastAPI with Pydantic request models so every payload is validated before it touches the database, SQLAlchemy for the data layer, and a small, explicit endpoint set — create, read, list, update status, delete — with a /health check and Swagger docs.",
+    outcomes:
+      "A clean, documented API deployed live on Render, with CORS configured so the Swagger docs work from any browser.",
+    contribution: [
+      "Designed the reservation model and the endpoint set, with Pydantic validation on every write.",
+      "Set up the Render deployment with a one-form blueprint and verified the live docs.",
+    ],
+    decisions: [
+      "Pydantic models on every endpoint — validation at the boundary, not in the handlers.",
+      "CORS open by default for the docs, with an env var to lock it down when a frontend is added.",
+    ],
+  },
+  "E-Commerce Sales Dashboard": {
+    steps: [
+      { title: "Start with raw orders", text: "The team's order dataset: revenue, categories, regions and time." },
+      { title: "Build the views", text: "Revenue, category and regional trends with interactive filters in Tableau." },
+      { title: "Let the owner explore", text: "Filters let a store owner slice by category or region and see what changes." },
+      { title: "Turn it into decisions", text: "The dashboard answers what sells, where, and what's trending — not just what happened." },
+    ],
+    challenge:
+      "A group project with four people and one dataset: the dashboard had to be clear enough for a store owner to act on, not just a chart gallery.",
+    approach:
+      "Built the Tableau dashboard with my team (Group 2, IFT 533) — revenue, category and regional trends with interactive filters — and published it to Tableau Public so anyone can explore it.",
+    outcomes:
+      "Total revenue 78,592,678 across the dataset, with Karnataka the top state at 13,335,534. The dashboard is live on Tableau Public.",
+    contribution: [
+      "Built the Tableau dashboard with my IFT 533 team (Group 2) — views, filters and the published workbook.",
+      "Presented the findings as decisions a store owner can act on, not just totals.",
+    ],
+    decisions: [
+      "Tableau Public for the live dashboard — free, shareable, explorable.",
+      "Filters over fixed charts: the owner asks their own questions instead of reading mine.",
+    ],
+  },
+};
+
 type Tool = { name: string; logo?: string; glyph?: string };
 
 const TOOLBOX: { category: string; icon: string; tools: Tool[] }[] = [
@@ -362,6 +512,7 @@ export default function Home() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [journeyTab, setJourneyTab] = useState<"work" | "education">("work");
   const [copied, setCopied] = useState(false);
+  const [caseStudy, setCaseStudy] = useState<Project | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
   const [navIndicator, setNavIndicator] = useState({ x: 0, w: 0 });
@@ -454,6 +605,20 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
+  // Case study modal: lock body scroll and close on Escape.
+  useEffect(() => {
+    if (!caseStudy) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCaseStudy(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [caseStudy]);
+
   const avatarSrc = theme === "dark" ? "/images/avatar-dark.webp" : "/images/avatar-light.webp";
 
   const copyEmail = async () => {
@@ -530,7 +695,7 @@ export default function Home() {
                   finishing my MS IT at Arizona State University.
                 </p>
                 <div className="chips">
-                  {["React", "Next.js", "TypeScript", "Python", "AI & ML"].map((chip) => (
+                  {["Software Engineer", "Full-Stack Engineer", "AI/ML Engineer", "Backend Engineer"].map((chip) => (
                     <span className="chip" key={chip}>
                       {chip}
                     </span>
@@ -730,7 +895,10 @@ export default function Home() {
             </p>
             <div className="project-grid">
               {PROJECTS.map((project) => (
-                <article className="project-card reveal" key={project.title}>
+                <article
+                  className={project.featured ? "project-card featured reveal" : "project-card reveal"}
+                  key={project.title}
+                >
                   <div className="project-media">
                     <img src={project.image} alt={project.imageAlt} loading="lazy" />
                     {project.featured && <span className="featured-badge">Featured</span>}
@@ -761,25 +929,33 @@ export default function Home() {
                     </div>
                     {project.note && <p className="project-note">{project.note}</p>}
                     <div className="project-links">
-                      {project.liveUrl ? (
-                        <a
-                          className="btn btn-primary btn-sm"
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
+                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                        {project.liveUrl ? (
+                          <a
+                            className="btn btn-primary btn-sm"
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Live app <Icon name="arrow-up-right" size={15} />
+                          </a>
+                        ) : project.tableauUrl ? (
+                          <a
+                            className="btn btn-primary btn-sm"
+                            href={project.tableauUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            View on Tableau <Icon name="arrow-up-right" size={15} />
+                          </a>
+                        ) : null}
+                        <button
+                          className="btn btn-ghost btn-sm"
+                          onClick={() => setCaseStudy(project)}
                         >
-                          Live app <Icon name="arrow-up-right" size={15} />
-                        </a>
-                      ) : project.tableauUrl ? (
-                        <a
-                          className="btn btn-primary btn-sm"
-                          href={project.tableauUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          View on Tableau <Icon name="arrow-up-right" size={15} />
-                        </a>
-                      ) : null}
+                          Case study →
+                        </button>
+                      </div>
                       {project.githubUrl && (
                         <a
                           className="icon-btn sm"
@@ -848,6 +1024,125 @@ export default function Home() {
           </span>
         </div>
       </footer>
+
+      {/* Case study modal */}
+      {caseStudy && CASE_STUDIES[caseStudy.title] && (
+        <div
+          className="modal-overlay"
+          onClick={() => setCaseStudy(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${caseStudy.title} case study`}
+        >
+          <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setCaseStudy(null)}
+              aria-label="Close case study"
+            >
+              <Icon name="x" size={18} />
+            </button>
+            <div className="modal-cover">
+              <img src={caseStudy.image} alt={caseStudy.imageAlt} />
+            </div>
+            <div className="modal-body">
+              <span className="project-eyebrow">{caseStudy.eyebrow}</span>
+              <h2>{caseStudy.title}</h2>
+              <p>{caseStudy.description}</p>
+              <div className="modal-actions">
+                {caseStudy.liveUrl ? (
+                  <a
+                    className="btn btn-primary btn-sm"
+                    href={caseStudy.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open project <Icon name="arrow-up-right" size={15} />
+                  </a>
+                ) : caseStudy.tableauUrl ? (
+                  <a
+                    className="btn btn-primary btn-sm"
+                    href={caseStudy.tableauUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View on Tableau <Icon name="arrow-up-right" size={15} />
+                  </a>
+                ) : null}
+                {caseStudy.githubUrl && (
+                  <a
+                    className="btn btn-ghost btn-sm"
+                    href={caseStudy.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View on GitHub →
+                  </a>
+                )}
+              </div>
+              {caseStudy.stats && (
+                <div className="modal-stats">
+                  {caseStudy.stats.slice(0, 3).map((s) => (
+                    <div className="modal-stat" key={s}>
+                      <b>{s}</b>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className="modal-section-label">How it works</p>
+              <div className="modal-steps">
+                {CASE_STUDIES[caseStudy.title].steps.map((step, i) => (
+                  <div className="modal-step" key={step.title}>
+                    <b>0{i + 1}</b>
+                    <h4>{step.title}</h4>
+                    <p>{step.text}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="modal-rows">
+                <div className="modal-row">
+                  <b>Challenge</b>
+                  <p>{CASE_STUDIES[caseStudy.title].challenge}</p>
+                </div>
+                <div className="modal-row">
+                  <b>Approach</b>
+                  <p>{CASE_STUDIES[caseStudy.title].approach}</p>
+                </div>
+                <div className="modal-row">
+                  <b>Outcomes</b>
+                  <p>{CASE_STUDIES[caseStudy.title].outcomes}</p>
+                </div>
+              </div>
+              <p className="modal-section-label">What I owned</p>
+              <div className="modal-owned">
+                <div className="modal-owned-card">
+                  <h4>My contribution</h4>
+                  <ul>
+                    {CASE_STUDIES[caseStudy.title].contribution.map((c) => (
+                      <li key={c}>{c}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="modal-owned-card">
+                  <h4>Design decisions</h4>
+                  <ul>
+                    {CASE_STUDIES[caseStudy.title].decisions.map((d) => (
+                      <li key={d}>{d}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <p className="modal-section-label">Built with</p>
+              <div className="modal-built">
+                {caseStudy.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+              {caseStudy.note && <p className="project-note">{caseStudy.note}</p>}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
