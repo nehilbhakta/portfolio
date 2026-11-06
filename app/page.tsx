@@ -152,6 +152,23 @@ export default function Home() {
   const [activeEdu, setActiveEdu] = useState(0);
   const [copied, setCopied] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("about");
+
+  useEffect(() => {
+    const sections = ["about", "journey", "toolbox", "work"]
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -195,10 +212,10 @@ export default function Home() {
             Nehil.
           </a>
           <nav className="nav-links" aria-label="Sections">
-            <a href="#about">About</a>
-            <a href="#journey">Journey</a>
-            <a href="#toolbox">Toolbox</a>
-            <a href="#work">Work</a>
+            <a href="#about" className={activeSection === "about" ? "active" : undefined}>About</a>
+            <a href="#journey" className={activeSection === "journey" ? "active" : undefined}>Journey</a>
+            <a href="#toolbox" className={activeSection === "toolbox" ? "active" : undefined}>Toolbox</a>
+            <a href="#work" className={activeSection === "work" ? "active" : undefined}>Work</a>
           </nav>
           <div className="nav-actions">
             <button
