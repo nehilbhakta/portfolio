@@ -151,6 +151,14 @@ export default function Home() {
   const [activeWork, setActiveWork] = useState(0);
   const [activeEdu, setActiveEdu] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const saved = window.localStorage.getItem("nehil-portfolio-theme");
@@ -180,7 +188,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="nav">
+      <header className={scrolled ? "nav scrolled" : "nav"}>
         <div className="nav-inner">
           <a className="brand" href="#top">
             <img src={avatarSrc} alt="Nehil Bhakta" />
