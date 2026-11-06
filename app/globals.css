@@ -76,7 +76,7 @@ section { padding: 84px 0 8px; scroll-margin-top: 90px; }
   transition: border-color 0.25s ease;
 }
 .nav.scrolled {
-  border-bottom-color: var(--border);
+  border-bottom-color: color-mix(in srgb, var(--border) 70%, transparent);
 }
 .nav-inner { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
