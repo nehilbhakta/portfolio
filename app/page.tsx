@@ -713,8 +713,7 @@ export default function Home() {
     };
   }, [caseStudy, contactOpen]);
 
-  const avatarSrc = theme === "dark" ? "/images/photo-dark.webp" : "/images/photo-light.webp";
-  const heroSrc = theme === "dark" ? "/images/avatar-dark.webp" : "/images/avatar-light.webp";
+  const avatarSrc = theme === "dark" ? "/images/avatar-dark.webp" : "/images/avatar-light.webp";
 
   const copyEmail = async () => {
     try {
@@ -826,7 +825,7 @@ export default function Home() {
                 </a>
               </div>
               <div className="hero-card">
-                <img src={heroSrc} alt="3D avatar of Nehil Bhakta" />
+                <img src={avatarSrc} alt="3D avatar of Nehil Bhakta" />
                 <div className="hero-badge">
                   <span className="hero-badge-icon">
                     <Icon name="rocket" size={20} />
