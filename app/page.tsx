@@ -1051,6 +1051,18 @@ export default function Home() {
                     <a href="tel:+18065448653">(806) 544-8653</a>
                   </div>
                 </div>
+                <div className="contact-item">
+                  <div>
+                    <small>LinkedIn</small>
+                    <a
+                      href="https://www.linkedin.com/in/nehil-bhakta"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      linkedin.com/in/nehil-bhakta
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
