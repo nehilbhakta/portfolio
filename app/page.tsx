@@ -555,31 +555,45 @@ const EDUCATION_ITEMS = [
 function ContactItems({ copied, onCopyEmail }: { copied: boolean; onCopyEmail: () => void }) {
   return (
     <div className="contact-rows">
-      <div className="contact-item">
-        <div>
+      <button className="contact-row" onClick={onCopyEmail}>
+        <span className="contact-row-icon">
+          <Icon name="mail" size={20} />
+        </span>
+        <span className="contact-row-text">
           <small>Email</small>
-          <a href="mailto:nbhakta@asu.edu">nbhakta@asu.edu</a>
-        </div>
-        <button onClick={onCopyEmail}>{copied ? "Copied ✓" : "Copy"}</button>
-      </div>
-      <div className="contact-item">
-        <div>
+          <b>nbhakta@asu.edu</b>
+        </span>
+        <span className="contact-row-action">{copied ? "Copied ✓" : "Copy"}</span>
+      </button>
+      <a className="contact-row" href="tel:+18065448653">
+        <span className="contact-row-icon">
+          <Icon name="phone" size={20} />
+        </span>
+        <span className="contact-row-text">
           <small>Phone</small>
-          <a href="tel:+18065448653">(806) 544-8653</a>
-        </div>
-      </div>
-      <div className="contact-item">
-        <div>
+          <b>(806) 544-8653</b>
+        </span>
+        <span className="contact-row-action">
+          <Icon name="arrow-up-right" size={15} />
+        </span>
+      </a>
+      <a
+        className="contact-row"
+        href="https://www.linkedin.com/in/nehil-bhakta"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <span className="contact-row-icon">
+          <img src="/icons/linkedin-white.svg" alt="" />
+        </span>
+        <span className="contact-row-text">
           <small>LinkedIn</small>
-          <a
-            href="https://www.linkedin.com/in/nehil-bhakta"
-            target="_blank"
-            rel="noreferrer"
-          >
-            linkedin.com/in/nehil-bhakta
-          </a>
-        </div>
-      </div>
+          <b>linkedin.com/in/nehil-bhakta</b>
+        </span>
+        <span className="contact-row-action">
+          <Icon name="arrow-up-right" size={15} />
+        </span>
+      </a>
     </div>
   );
 }
@@ -699,7 +713,7 @@ export default function Home() {
     };
   }, [caseStudy, contactOpen]);
 
-  const avatarSrc = theme === "dark" ? "/images/avatar-dark.webp" : "/images/avatar-light.webp";
+  const avatarSrc = theme === "dark" ? "/images/photo-dark.webp" : "/images/photo-light.webp";
 
   const copyEmail = async () => {
     try {
@@ -764,8 +778,9 @@ export default function Home() {
                 </span>
                 <h1>Nehil Bhakta</h1>
                 <p className="tagline">
-                  Building web products and{" "}
-                  <span className="gradient-animated">the ML systems behind them</span>.
+                  Building web products and
+                  <br />
+                  <span className="gradient-animated">the ML systems behind them.</span>
                 </p>
                 <p className="role-line">
                   Full-stack developer with 2+ years shipping production React and Next.js
