@@ -634,14 +634,15 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // The portfolio always opens in dark mode: clear any stored theme so a
+  // previous light-mode choice never carries over to the next visit.
+  // The toggle still works within a visit, but nothing is remembered.
   useEffect(() => {
-    const saved = window.localStorage.getItem("nehil-portfolio-theme");
-    if (saved === "light" || saved === "dark") setTheme(saved);
+    window.localStorage.removeItem("nehil-portfolio-theme");
   }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    window.localStorage.setItem("nehil-portfolio-theme", theme);
   }, [theme]);
 
   // Sliding nav highlight: measure the active link and glide the pill to it.
