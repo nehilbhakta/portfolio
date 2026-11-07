@@ -798,6 +798,10 @@ export default function Home() {
                   the details that make software feel effortless: a clean interface, a fast
                   interaction, and a backend that just works.
                 </p>
+                <p>
+                  Right now I&apos;m shipping work I can show — six projects live on the web,
+                  deployed, tested, and measured.
+                </p>
               </div>
               <div className="about-highlights">
                 {ABOUT_HIGHLIGHTS.map((item) => (
