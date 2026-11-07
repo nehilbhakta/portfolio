@@ -131,6 +131,15 @@ const ICON_PATHS: Record<string, ReactNode> = {
       <path d="m6 6 12 12" />
     </>
   ),
+  mail: (
+    <>
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </>
+  ),
+  phone: (
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  ),
 };
 
 function Icon({ name, size = 20 }: { name: string; size?: number }) {
@@ -170,37 +179,37 @@ type Project = {
 const PROJECTS: Project[] = [
   {
     title: "TaskBoard — Full-Stack Task Board",
-    dates: "Nov 2026 – Present",
+    dates: "Nov 2026",
     eyebrow: "Full-Stack · Productivity",
     description:
-      "A full-stack task board with boards, lists and cards, drag-and-drop, and search and filtering. FastAPI + SQLAlchemy backend with a Next.js 15 / React 19 / TypeScript frontend, seeded with a Product Launch board.",
+      "A Trello-style task board built end to end: boards, lists and cards with drag-and-drop, priorities, due dates, labels, search and filtering. FastAPI + SQLAlchemy backend, Next.js 15 / React 19 / TypeScript frontend, no UI component library.",
     image: "/images/project-taskboard.png",
     imageAlt: "TaskBoard board view with columns and cards",
     tags: ["Next.js 15", "React 19", "TypeScript", "FastAPI", "SQLAlchemy", "SQLite"],
     githubUrl: "https://github.com/nehilbhakta/task-board",
     liveUrl: "https://nehilbhakta-taskboard.vercel.app",
     featured: true,
-    stats: ["4 lists", "7 seeded cards", "Drag-and-drop", "4 backend tests passed"],
+    stats: ["Drag-and-drop that saves instantly", "SQLite → PostgreSQL via one env var", "Live on Vercel + Render"],
   },
   {
     title: "RLVR Environment",
-    dates: "Nov 2026 – Present",
+    dates: "Nov 2026",
     eyebrow: "Machine Learning · Reinforcement Learning",
     description:
-      "A Gymnasium-style reinforcement learning environment with verifiable rewards: 10 code tasks checked by unit tests and 10 math tasks checked by exact answers. Reward comes only from the verifier — never from a model judging itself.",
+      "A Gymnasium-style RL environment where reward comes only from a verifier, never from a model grading itself: 10 code tasks checked by hidden unit tests and 10 math tasks checked by exact answers. Includes a 299K-parameter transformer trained from scratch against it.",
     image: "/images/project-rlvr.webp",
     imageAlt: "RLVR Environment project cover",
     tags: ["Python", "Gymnasium", "Reinforcement Learning", "pytest"],
     githubUrl: "https://github.com/nehilbhakta/rlvr-env",
     liveUrl: "https://nehilbhakta-rlvr-demo.vercel.app",
-    stats: ["20 tasks", "Baseline 2/20", "Oracle 20/20", "Tiny-model experiment 7/20"],
+    stats: ["Oracle 20/20", "Trained model 7/20", "Baseline 2/20"],
   },
   {
     title: "Supply Chain KPI Dashboard",
-    dates: "Nov 2026 – Present",
+    dates: "Nov 2026",
     eyebrow: "Data Analytics · Supply Chain",
     description:
-      "A supply chain analytics dashboard over simulated procurement data: spend, on-time delivery, supplier scorecards and stockout risk, with a data dictionary and a Tableau spec.",
+      "Supply chain KPI analysis over simulated procurement data: spend, on-time delivery, supplier scorecards and stockout risk. Every KPI is defined in a data dictionary and checked by 18 automated tests, with a Tableau dashboard spec built from the same data.",
     image: "/images/project-supplychain.webp",
     imageAlt: "Supply Chain KPI Dashboard project cover",
     tags: ["Python", "Pandas", "Data Analysis", "Tableau"],
@@ -211,16 +220,16 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Heart Attack Risk Prediction & Alert Pipeline",
-    dates: "Apr 2026",
+    dates: "Apr 2026 · Rebuilt Nov 2026",
     eyebrow: "Machine Learning · Healthcare",
     description:
-      "An end-to-end risk prediction and alert pipeline: an XGBoost model trained on the UCI Cleveland heart disease dataset, served by a FastAPI API with a patient dashboard and live alerts.",
+      "Started as an event-driven AWS pipeline (S3, EMR/Spark, SageMaker, Lambda, SNS) and rebuilt as a free local app: an XGBoost model trained on the UCI Cleveland dataset, served by FastAPI, with a patient dashboard and live high-risk alerts.",
     image: "/images/project-heartrisk.png",
     imageAlt: "Heart Attack Risk Prediction dashboard home",
-    tags: ["Python", "XGBoost", "FastAPI", "Machine Learning"],
+    tags: ["Python", "XGBoost", "FastAPI", "Machine Learning", "AWS"],
     githubUrl: "https://github.com/nehilbhakta/heart-attack-risk-prediction",
     liveUrl: "https://nehilbhakta-heartrisk.vercel.app",
-    stats: ["303 rows (UCI Cleveland)", "Test AUC 0.957", "20 simulated patients"],
+    stats: ["Test ROC-AUC 0.957", "5-fold CV 0.896", "20 simulated patients"],
     note: "Demo / educational project using simulated patient data. Not a medical device.",
   },
   {
@@ -228,7 +237,7 @@ const PROJECTS: Project[] = [
     dates: "Mar 2026",
     eyebrow: "Backend · REST API",
     description:
-      "A REST API for restaurant reservations — tables, bookings and availability — built with FastAPI and SQLAlchemy, with validated request models and clear endpoint design.",
+      "A REST API for restaurant reservations built with FastAPI and SQLAlchemy: create, look up, list and update bookings, with Pydantic validation on every write and live Swagger docs.",
     image: "/images/project-restaurant-api.webp",
     imageAlt: "Restaurant Reservation API project cover",
     tags: ["FastAPI", "Python", "SQLAlchemy", "REST APIs"],
@@ -238,12 +247,12 @@ const PROJECTS: Project[] = [
   {
     title: "E-Commerce Sales Dashboard",
     dates: "Sep – Dec 2025",
-    eyebrow: "Data Visualisation · Tableau",
+    eyebrow: "Data Visualization · Tableau",
     description:
-      "A Tableau sales dashboard built for a group project at ASU: revenue, category and regional trends with interactive filters, turning raw order data into decisions a store owner can act on.",
+      "A Tableau sales dashboard from an ASU group project (IFT 533): revenue, category and regional trends with interactive filters, built so a store owner can see what sells, where, and what's trending.",
     image: "/images/project-ecommerce.png",
     imageAlt: "E-Commerce Sales Dashboard overview",
-    tags: ["Tableau", "Data Visualisation", "SQL"],
+    tags: ["Tableau", "Data Visualization", "SQL"],
     tableauUrl:
       "https://public.tableau.com/app/profile/nehil.bhakta/viz/IFT533_Group2Project/Dashboard1",
     liveUrl: "",
@@ -272,14 +281,14 @@ const CASE_STUDIES: Record<string, CaseStudy> = {
     approach:
       "Kept the stack boring on purpose: FastAPI + SQLAlchemy on the backend with a clean Board → List → Card model and Pydantic validation, and a Next.js frontend that talks to it through one small API client. Drag-and-drop is plain HTML5 drag events, and the database is SQLite by default with PostgreSQL behind a single env var.",
     outcomes:
-      "A working board seeded with a realistic Product Launch board (4 lists, 7 cards) on first run, 4 backend tests passing, and the whole thing deployed live on free tiers — Vercel frontend, Render backend — with demo data re-seeding itself on startup.",
+      "A working board that opens with a realistic Product Launch demo, backend tests for the API, and a live deployment on free tiers — Vercel frontend, Render backend — with the demo data re-seeding itself on startup.",
     contribution: [
       "Built the whole thing end to end — data model, REST API, tests, and the Next.js frontend.",
       "Designed the drag-and-drop interaction and the card detail dialog, with no UI component library.",
     ],
     decisions: [
       "SQLite by default, PostgreSQL via DATABASE_URL — the same code runs locally and in production.",
-      "No heavy UI library: custom CSS keeps the frontend light and the drag behaviour fully under my control.",
+      "No heavy UI library: custom CSS keeps the frontend light and the drag behavior fully under my control.",
     ],
   },
   "RLVR Environment": {
@@ -294,14 +303,14 @@ const CASE_STUDIES: Record<string, CaseStudy> = {
     approach:
       "A Gymnasium-style environment where every task has a verifier — pytest-style unit tests for code, exact-answer matching for math. The reward is binary and comes only from the verifier, and the env follows the standard reset/step API so any Gymnasium-compatible training loop can use it.",
     outcomes:
-      "The heuristic baseline scores 2/20 and the oracle 20/20 — the spread that proves the verifiers work. A 299K-parameter transformer trained from scratch on the env scores 7/20, and the held-out results are reported honestly, including where it fails: it never learned general arithmetic.",
+      "The heuristic baseline scores 2/20 and the oracle 20/20, which shows the verifiers separate right from wrong. A 299K-parameter transformer trained from scratch on the environment scores 7/20; the write-up reports held-out results and where it fails (it never learned general arithmetic).",
     contribution: [
       "Designed the 20-task bank, the verifiers, and the Gymnasium API surface.",
-      "Ran the baseline, oracle and tiny-model experiments and wrote up the honest results — including the failures.",
+      "Ran the baseline, oracle and trained-model experiments and documented the results, including the failures.",
     ],
     decisions: [
       "Binary rewards on purpose: verifiable rewards are sharp, even if the signal is sparse.",
-      "Code runs in-process with exec for speed — flagged as not a sandbox, with containerisation as the production answer.",
+      "Code runs in-process with exec for speed — flagged as not a sandbox, with containerization as the production answer.",
     ],
   },
   "Supply Chain KPI Dashboard": {
@@ -314,7 +323,7 @@ const CASE_STUDIES: Record<string, CaseStudy> = {
     challenge:
       "Supply chain data only helps if people trust it: every KPI needs a written definition and formula, the numbers need audit checks, and a bad supplier needs evidence, not a gut feeling.",
     approach:
-      "Generated a reproducible simulated dataset with a fixed seed, computed every KPI in pandas with a data dictionary that defines each one, wrote a supplier scorecard with a structured miss report, and specified the Tableau dashboard from the same CSVs — with “simulated” labelled everywhere so the data is never mistaken for real.",
+      "Generated a reproducible simulated dataset with a fixed seed, computed every KPI in pandas with a data dictionary that defines each one, wrote a supplier scorecard with a structured miss report, and specified the Tableau dashboard from the same CSVs — with “simulated” labeled everywhere so the data is never mistaken for real.",
     outcomes:
       "732 POs, $13.77M spend, 90.2% on-time delivery; Desert Freight Logistics identified at 69.1% OTD with +1.68 days lateness and a 4.00% defect rate; 9 stockout-risk SKUs and $586,612 of excess inventory surfaced — all verified by 18 automated checks.",
     contribution: [
@@ -322,7 +331,7 @@ const CASE_STUDIES: Record<string, CaseStudy> = {
       "Wrote the data dictionary and the Tableau dashboard spec so the analysis is reproducible from the CSVs.",
     ],
     decisions: [
-      "Simulated data, labelled everywhere — honest about what the findings are and aren't.",
+      "Simulated data, labeled everywhere, so the findings are never mistaken for real ones.",
       "A miss report format (what happened, trend, scope, impact, hypothesis, prevention) instead of a single bad score.",
     ],
   },
@@ -338,10 +347,10 @@ const CASE_STUDIES: Record<string, CaseStudy> = {
     approach:
       "Rebuilt the pipeline with local equivalents: SQLite instead of S3/Athena, a Python aggregation step instead of Spark, XGBoost trained locally instead of SageMaker, FastAPI instead of Lambda, and an alerts table instead of SNS. The original overfit synthetic data (validation AUC ~0.51); this version trains on the real UCI Cleveland data.",
     outcomes:
-      "Test ROC-AUC 0.957 (accuracy 0.885, recall 0.964), 5-fold CV 0.896 ± 0.015 — a model that generalises, with 20 simulated patients and a live alerts page. Deployed on Vercel + Render.",
+      "Test ROC-AUC 0.957 (accuracy 0.885, recall 0.964) and 5-fold CV 0.896 ± 0.015, up from ~0.51 validation AUC in the original synthetic-data version. Live on Vercel + Render with 20 simulated patients and an alerts page.",
     contribution: [
       "Rebuilt the full AWS pipeline as a free local app — model training, API, patient dashboard and alerts.",
-      "Wrote the honest metrics section, including the train/test gap and where the model would not transfer.",
+      "Documented the metrics, including the train/test gap and where the model would not transfer.",
     ],
     decisions: [
       "Local-first rebuild: same architecture, zero cloud cost, runnable on any laptop.",
@@ -419,8 +428,7 @@ const TOOLBOX: { category: string; icon: string; tools: Tool[] }[] = [
       { name: "Python", logo: "python" },
       { name: "FastAPI", logo: "fastapi" },
       { name: "SQLAlchemy", logo: "sqlalchemy" },
-      { name: "REST APIs", glyph: "braces" },
-      { name: "RESTful API Design", glyph: "code" },
+      { name: "REST API Design", glyph: "braces" },
     ],
   },
   {
@@ -434,11 +442,23 @@ const TOOLBOX: { category: string; icon: string; tools: Tool[] }[] = [
     ],
   },
   {
-    category: "Cloud & Data",
+    category: "ML & Data",
+    icon: "cpu",
+    tools: [
+      { name: "scikit-learn", glyph: "cpu" },
+      { name: "XGBoost", glyph: "trending-up" },
+      { name: "Gymnasium (RL)", glyph: "sparkles" },
+      { name: "Pandas", glyph: "database" },
+      { name: "Tableau", glyph: "chart" },
+    ],
+  },
+  {
+    category: "Cloud",
     icon: "cloud",
     tools: [
-      { name: "AWS", logo: "aws" },
-      { name: "Tableau", glyph: "chart" },
+      { name: "AWS (S3, EMR, SageMaker, Lambda, SNS)", logo: "aws" },
+      { name: "Vercel", glyph: "rocket" },
+      { name: "Render", glyph: "server" },
     ],
   },
   {
@@ -458,13 +478,13 @@ const TOOLBOX: { category: string; icon: string; tools: Tool[] }[] = [
 const ABOUT_HIGHLIGHTS: { icon: string; title: string; text: string }[] = [
   {
     icon: "sparkles",
-    title: "Full-stack products",
-    text: "2+ years at Ordex building React and Next.js frontends for 10+ client products — restaurant waitlists, childcare marketplaces, ERP and real estate.",
+    title: "Production frontends",
+    text: "2+ years at Ordex building React and Next.js frontends for 10+ client products, including cutting page load from 3.2s to 1.8s and lifting Lighthouse scores from the mid-60s to ~90.",
   },
   {
     icon: "cpu",
     title: "Applied machine learning",
-    text: "An XGBoost heart-risk model with test AUC 0.957, and a Gymnasium-style RLVR environment with verifiable rewards — oracle 20/20.",
+    text: "A Gymnasium-style RL environment with verifiable rewards and a transformer trained from scratch against it, plus an XGBoost heart-risk model with test ROC-AUC 0.957.",
   },
   {
     icon: "trending-up",
@@ -476,23 +496,23 @@ const ABOUT_HIGHLIGHTS: { icon: string; title: string; text: string }[] = [
 const ABOUT_PRINCIPLES: { icon: string; title: string; text: string }[] = [
   {
     icon: "server",
-    title: "Production-ready by default",
-    text: "Reliability, testing and observability are built in, not added afterwards.",
+    title: "Shipped, not just built",
+    text: "Every project is deployed with a live link, a README and tests, so you can try it instead of taking my word for it.",
   },
   {
     icon: "chart",
-    title: "Measurable outcomes",
-    text: "Every system is tied to a metric it is expected to move, and measured against it.",
+    title: "Numbers I can defend",
+    text: "Results come with their baselines and limits, like an oracle and a heuristic next to every model score.",
   },
   {
     icon: "square-kanban",
     title: "Built with the team",
-    text: "Clear pull requests, documentation and honest numbers keep the whole team moving.",
+    text: "Two years of agile sprints and Git code review at Ordex: clear pull requests and documentation keep everyone moving.",
   },
 ];
 
 const ABOUT_STATS: { value: string; label: string }[] = [
-  { value: "6+", label: "Projects shipped" },
+  { value: "6", label: "Projects live" },
   { value: "2+", label: "Years of experience" },
   { value: "3.78", label: "Master's GPA" },
 ];
@@ -505,11 +525,11 @@ const WORK_ITEMS = [
     dates: "Aug 2022 – Dec 2024",
     bullets: [
       "Hired full-time in the third year of my B.Tech after interviewing for an internship — and worked full-time while completing the degree.",
-      "Built React and Next.js frontends for 10+ client products across hospitality, lifestyle, education, ERP and real estate, for clients in the US and India.",
-      "Kyobee restaurant waitlist platform: guest self check-in screen and a live wait-status view.",
-      "GiftAMeal social-impact dining app (St. Louis, Chicago, Detroit): a photo-upload flow that triggers a meal donation — the platform has funded over 92,000 meals.",
+      "Built React and Next.js frontends for 10+ client products across hospitality, lifestyle, education, ERP and real estate for clients in the US and India; cut page load from 3.2s to 1.8s and raised Lighthouse scores from the mid-60s to ~90 with code splitting and lazy loading.",
+      "Kyobee (now RetailBoon), Ordex's restaurant waitlist platform: built the guest self check-in screen and the live wait-status view showing parties ahead and estimated wait, with 15+ reusable React components that cut new-screen development time by ~25%.",
+      "GiftAMeal, a social-impact dining app: implemented the photo-upload flow that triggers a meal donation each time a diner shares a photo.",
       "BabySitter US childcare marketplace (MERN): the “Find a Babysitter” search and “Register to Be a Babysitter” onboarding as responsive React interfaces.",
-      "REST API integration, and agile sprints with Git code review.",
+      "Integrated REST APIs across client projects and worked in agile sprints with Git-based code review.",
       "Began at Ordex in UI/UX design for the first few months — user research, wireframes and prototypes in Figma — before moving into frontend development.",
     ],
   },
@@ -532,11 +552,44 @@ const EDUCATION_ITEMS = [
   },
 ];
 
+function ContactItems({ copied, onCopyEmail }: { copied: boolean; onCopyEmail: () => void }) {
+  return (
+    <div className="contact-rows">
+      <div className="contact-item">
+        <div>
+          <small>Email</small>
+          <a href="mailto:nbhakta@asu.edu">nbhakta@asu.edu</a>
+        </div>
+        <button onClick={onCopyEmail}>{copied ? "Copied ✓" : "Copy"}</button>
+      </div>
+      <div className="contact-item">
+        <div>
+          <small>Phone</small>
+          <a href="tel:+18065448653">(806) 544-8653</a>
+        </div>
+      </div>
+      <div className="contact-item">
+        <div>
+          <small>LinkedIn</small>
+          <a
+            href="https://www.linkedin.com/in/nehil-bhakta"
+            target="_blank"
+            rel="noreferrer"
+          >
+            linkedin.com/in/nehil-bhakta
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [journeyTab, setJourneyTab] = useState<"work" | "education">("work");
   const [copied, setCopied] = useState(false);
   const [caseStudy, setCaseStudy] = useState<Project | null>(null);
+  const [contactOpen, setContactOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
   const [navIndicator, setNavIndicator] = useState({ x: 0, w: 0 });
@@ -629,19 +682,22 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  // Case study modal: lock body scroll and close on Escape.
+  // Modals (case study or contact): lock body scroll and close on Escape.
   useEffect(() => {
-    if (!caseStudy) return;
+    if (!caseStudy && !contactOpen) return;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setCaseStudy(null);
+      if (e.key === "Escape") {
+        setCaseStudy(null);
+        setContactOpen(false);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [caseStudy]);
+  }, [caseStudy, contactOpen]);
 
   const avatarSrc = theme === "dark" ? "/images/avatar-dark.webp" : "/images/avatar-light.webp";
 
@@ -704,19 +760,18 @@ export default function Home() {
             <div className="hero-grid">
               <div>
                 <span className="pill">
-                  <span className="dot" /> Available for opportunities · Tempe, AZ
+                  <span className="dot" /> Open to full-time roles from Jan 2027 · Phoenix, AZ · Open to relocate
                 </span>
                 <h1>Nehil Bhakta</h1>
                 <p className="tagline">
-                  Building{" "}
-                  <span className="gradient-animated">intelligent web products</span>{" "}
-                  and AI-driven experiences.
+                  Building web products and{" "}
+                  <span className="gradient-animated">the ML systems behind them</span>.
                 </p>
                 <p className="role-line">
-                  I&apos;m a frontend and full-stack developer who likes building products
-                  people actually use — from restaurant waitlists and childcare marketplaces
-                  to dashboards that turn messy data into clear decisions. Currently
-                  finishing my MS IT at Arizona State University.
+                  Full-stack developer with 2+ years shipping production React and Next.js
+                  apps, now building applied ML systems. Finishing my MS in IT at Arizona
+                  State University (Dec 2026) and looking for new-grad full-stack and ML
+                  engineering roles.
                 </p>
                 <div className="chips">
                   {["React", "Next.js", "TypeScript", "Python", "AI & ML"].map((chip) => (
@@ -761,20 +816,20 @@ export default function Home() {
                     <Icon name="rocket" size={20} />
                   </span>
                   <div>
-                    <b>6+</b>
-                    <span>Projects shipped</span>
+                    <b>6</b>
+                    <span>Projects live</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="stack-strip">
               <p className="stack-cta">
-                I&apos;m happy to show you <span className="grad-text">my work</span> — have a
-                look around.
+                Hiring for <span className="grad-text">full-stack or ML</span>? I&apos;d love
+                to hear about the role.
               </p>
-              <a className="btn btn-primary btn-sm" href="#contact">
+              <button className="btn btn-primary btn-sm" onClick={() => setContactOpen(true)}>
                 Let&apos;s connect <Icon name="arrow-up-right" size={15} />
-              </a>
+              </button>
             </div>
           </div>
         </section>
@@ -793,14 +848,14 @@ export default function Home() {
                   to dashboards that turn messy data into clear decisions. I started in
                   UI/UX design, moved into React and Next.js development, and now I&apos;m
                   finishing my master&apos;s at Arizona State University{" "}
-                  <strong>(GPA 3.78/4.0)</strong>, where I&apos;ve been going deeper into
-                  full-stack systems, data and applied machine learning. I care most about
+                  <strong>(GPA 3.78/4.0)</strong>, where I&apos;ve gone deeper into
+                  full-stack systems, data engineering on AWS and applied machine learning. I care most about
                   the details that make software feel effortless: a clean interface, a fast
                   interaction, and a backend that just works.
                 </p>
                 <p>
-                  Right now I&apos;m shipping work I can show — six projects live on the web,
-                  deployed, tested, and measured.
+                  Right now I&apos;m shipping work I can show: six projects you can open and
+                  try, each with its source code and a case study.
                 </p>
               </div>
               <div className="about-highlights">
@@ -941,8 +996,8 @@ export default function Home() {
             <span className="section-label">04 · Selected work</span>
             <h2 className="section-title">Things I&apos;ve built</h2>
             <p className="section-sub">
-              Full-stack apps, APIs, dashboards and machine learning experiments — each one
-              built to solve a real problem, not just to fill a page.
+              Full-stack apps, APIs, dashboards and machine learning systems. Each one is
+              live, open source, and has a case study explaining the decisions behind it.
             </p>
             <div className="project-grid">
               {PROJECTS.map((project) => (
@@ -1037,33 +1092,7 @@ export default function Home() {
                 I&apos;m open to full-time opportunities and interesting projects. The fastest
                 way to reach me is email or phone.
               </p>
-              <div className="contact-rows">
-                <div className="contact-item">
-                  <div>
-                    <small>Email</small>
-                    <a href="mailto:nbhakta@asu.edu">nbhakta@asu.edu</a>
-                  </div>
-                  <button onClick={copyEmail}>{copied ? "Copied ✓" : "Copy"}</button>
-                </div>
-                <div className="contact-item">
-                  <div>
-                    <small>Phone</small>
-                    <a href="tel:+18065448653">(806) 544-8653</a>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div>
-                    <small>LinkedIn</small>
-                    <a
-                      href="https://www.linkedin.com/in/nehil-bhakta"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      linkedin.com/in/nehil-bhakta
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <ContactItems copied={copied} onCopyEmail={copyEmail} />
             </div>
           </div>
         </section>
@@ -1071,7 +1100,7 @@ export default function Home() {
 
       <footer>
         <div className="footer-inner">
-          <span>© 2026 Nehil Bhakta · Tempe, AZ</span>
+          <span>© 2026 Nehil Bhakta · Phoenix, AZ · Open to relocation across the US</span>
           <span>
             <a href="https://github.com/nehilbhakta" target="_blank" rel="noreferrer">
               GitHub
@@ -1202,6 +1231,87 @@ export default function Home() {
                 ))}
               </div>
               {caseStudy.note && <p className="project-note">{caseStudy.note}</p>}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact popup */}
+      {contactOpen && (
+        <div
+          className="modal-overlay"
+          onClick={() => setContactOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Get in touch"
+        >
+          <div className="modal-panel contact-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setContactOpen(false)}
+              aria-label="Close contact dialog"
+            >
+              <Icon name="x" size={18} />
+            </button>
+            <div className="modal-body">
+              <div className="contact-modal-head">
+                <img src={avatarSrc} alt="Nehil Bhakta" />
+                <div>
+                  <h2>Nehil Bhakta</h2>
+                  <p>Full-stack developer · MS IT @ Arizona State University</p>
+                </div>
+              </div>
+              <div className="contact-modal-status">
+                <span className="pill">
+                  <span className="dot" /> Open to full-time roles from Jan 2027
+                </span>
+              </div>
+              <p>
+                I&apos;m open to full-time opportunities and interesting projects. The fastest
+                way to reach me is email or phone.
+              </p>
+              <div className="contact-modal-rows">
+                <button className="contact-row" onClick={copyEmail}>
+                  <span className="contact-row-icon">
+                    <Icon name="mail" size={20} />
+                  </span>
+                  <span className="contact-row-text">
+                    <small>Email</small>
+                    <b>nbhakta@asu.edu</b>
+                  </span>
+                  <span className="contact-row-action">{copied ? "Copied ✓" : "Copy"}</span>
+                </button>
+                <a className="contact-row" href="tel:+18065448653">
+                  <span className="contact-row-icon">
+                    <Icon name="phone" size={20} />
+                  </span>
+                  <span className="contact-row-text">
+                    <small>Phone</small>
+                    <b>(806) 544-8653</b>
+                  </span>
+                  <span className="contact-row-action">
+                    <Icon name="arrow-up-right" size={15} />
+                  </span>
+                </a>
+                <a
+                  className="contact-row"
+                  href="https://www.linkedin.com/in/nehil-bhakta"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="contact-row-icon">
+                    <img src="/icons/linkedin-white.svg" alt="" />
+                  </span>
+                  <span className="contact-row-text">
+                    <small>LinkedIn</small>
+                    <b>linkedin.com/in/nehil-bhakta</b>
+                  </span>
+                  <span className="contact-row-action">
+                    <Icon name="arrow-up-right" size={15} />
+                  </span>
+                </a>
+              </div>
+              <p className="contact-modal-foot">Phoenix, AZ · Open to relocation across the US</p>
             </div>
           </div>
         </div>

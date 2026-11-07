@@ -502,9 +502,49 @@ footer { border-top: 1px solid var(--border); margin-top: 90px; padding: 28px 0 
 .modal-built { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
 .modal-built span { background: var(--chip-bg); border: 1px solid var(--border); padding: 7px 13px; border-radius: 999px; font-size: 13.5px; font-weight: 600; }
 
+/* ---------- Contact modal ---------- */
+.contact-modal { max-width: 600px; }
+.contact-modal::before {
+  content: ""; display: block; height: 4px;
+  background: linear-gradient(90deg, #a78bfa, #e879f9, #818cf8, #a78bfa);
+}
+.contact-modal .modal-body { margin-top: 0; padding: 28px 32px 32px; }
+.contact-modal .contact-modal-head { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.contact-modal .contact-modal-head img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--violet-2); flex-shrink: 0; }
+.contact-modal .contact-modal-head h2 { margin: 0 0 4px; font-size: 22px; }
+.contact-modal .contact-modal-head p { margin: 0; color: var(--text-muted); font-size: 14px; line-height: 1.5; }
+.contact-modal .contact-modal-status { margin-bottom: 20px; }
+.contact-modal-rows { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.contact-row {
+  display: flex; align-items: center; gap: 14px; width: 100%;
+  background: var(--bg-card-2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 13px 16px; text-align: left; cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  color: var(--text); font-family: inherit;
+}
+.contact-row:hover { transform: translateY(-1px); border-color: var(--violet-2); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25); }
+.contact-row-icon {
+  flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, #5b21b6, #7c3aed); color: #fff;
+}
+.contact-row-icon img { width: 22px; height: 22px; }
+.contact-row-text { flex: 1; min-width: 0; }
+.contact-row-text small { display: block; font-size: 12px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+.contact-row-text b { font-size: 16px; letter-spacing: -0.01em; }
+.contact-row-action {
+  flex-shrink: 0; font-size: 13px; font-weight: 700; color: var(--violet-2);
+  background: var(--chip-bg); border: 1px solid var(--border);
+  border-radius: 999px; padding: 7px 13px;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.contact-row-action svg { width: 15px; height: 15px; }
+.contact-modal .contact-modal-foot { margin: 0; color: var(--text-dim); font-size: 13.5px; text-align: center; }
+
 @media (max-width: 860px) {
   .modal-overlay { padding: 16px 12px; }
   .modal-body { padding: 8px 22px 26px; }
+  .contact-modal .modal-body { padding: 24px 20px 28px; }
   .modal-steps { grid-template-columns: 1fr; }
   .modal-owned { grid-template-columns: 1fr; }
   .modal-row { grid-template-columns: 1fr; gap: 6px; }
